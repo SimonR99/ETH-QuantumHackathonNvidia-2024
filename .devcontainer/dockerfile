@@ -1,0 +1,7 @@
+FROM nvcr.io/nvidia/nightly/cuda-quantum:latest
+
+
+WORKDIR /workspaces/ETH-QuantumHackathonNvidia-2024/
+
+
+CMD ["apt-get", "update"]
