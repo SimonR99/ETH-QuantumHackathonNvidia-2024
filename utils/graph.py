@@ -38,11 +38,25 @@ def generate_point_graph_with_weights(n):
 
     return point_graph
 
-def draw_graph(G, colors, pos):
-      img = plt.imread("img/ocean.jpg")
-      fig, ax = plt.subplots()
-      ax.imshow(img, extent=[-0.1, 1.1, -0.1, 1.1])
-      default_axes = plt.axes(frameon=True)
-      nx.draw_networkx(G, node_color=colors, node_size=600, alpha=0.8, ax=default_axes, pos=pos)
-      edge_labels = nx.get_edge_attributes(G, "weight")
-      nx.draw_networkx_edge_labels(G, pos=pos, edge_labels=edge_labels)
+def draw_graph(graph):
+    img = plt.imread("img/ocean.jpg")
+    fig, ax = plt.subplots()
+    ax.imshow(img, extent=[-0.1, 1.1, -0.1, 1.1])
+    
+    positions = nx.get_node_attributes(graph, 'pos')
+    edge_labels = nx.get_edge_attributes(graph, "weight")
+    
+    labels_position = {node: (position[0], position[1] + 0.06) for node, position in positions.items()}
+    labels = {node: graph.nodes[node]['weight'] for node in graph.nodes()}
+    
+    node_colors = ['yellow' if node == 0 else 'lightblue' for node in graph.nodes()]
+
+      
+    # Drawing the graph
+    nx.draw_networkx_labels(graph, labels_position, labels=labels, font_size=12, font_color='black')
+    # nx.draw_networkx_edge_labels(graph, pos=positions, edge_labels=edge_labels)
+    nx.draw(graph, positions, with_labels=True, node_color=node_colors, edge_color='black', node_size=250)
+
+    # Show the graph
+    plt.title('Ocean waste simulation')
+    plt.show()
