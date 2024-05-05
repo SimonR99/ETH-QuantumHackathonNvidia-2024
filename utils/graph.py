@@ -60,3 +60,24 @@ def draw_graph(graph):
     # Show the graph
     plt.title('Ocean waste simulation')
     plt.show()
+    
+    
+def draw_partitionned_graph(graphs, colors):
+    img = plt.imread("img/ocean.jpg")
+    fig, ax = plt.subplots()
+    ax.imshow(img, extent=[-0.1, 1.1, -0.1, 1.1])
+    
+    for i in range(len(graphs)):
+        graph = graphs[i]
+        color = colors[i]        
+    
+        positions = nx.get_node_attributes(graph, 'pos')
+        edge_labels = nx.get_edge_attributes(graph, "weight")
+        
+        labels_position = {node: (position[0], position[1] + 0.06) for node, position in positions.items()}
+        labels = {node: graph.nodes[node]['weight'] for node in graph.nodes()}
+        nx.draw(graph, positions, with_labels=True, node_color=color, edge_color='black', node_size=250)
+
+    # Show the graph
+    plt.title('Ocean waste simulation')
+    plt.show()
